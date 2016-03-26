@@ -1,0 +1,13 @@
+---
+- set_fact:
+    fail2ban_wordress_plugin_name_version: "{{ fail2ban_wordress_plugin_name }}.{{ fail2ban_wordress_plugin_version }}"
+  when: not fail2ban_wordress_plugin_version | trim == ''
+
+- set_fact:
+    fail2ban_wordress_plugin_name_version: "{{ fail2ban_wordress_plugin_name }}"
+  when: fail2ban_wordress_plugin_name_version is undefined
+
+- debug: var=fail2ban_wordress_plugin_name_version
+
+- include: fail2ban-RedHat.yml
+  when: ansible_os_family == 'RedHat'

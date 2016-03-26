@@ -1,0 +1,29 @@
+---
+- name: Install unzip package.
+  yum: name={{ item }} state=present
+  with_items:
+    - fail2ban
+    - unzip
+
+- name: Download the fail2ban plugin.
+  get_url:
+    url: https://downloads.wordpress.org/plugin/{{ fail2ban_wordress_plugin_name_version }}.zip
+    dest: /tmp/{{ fail2ban_wordress_plugin_name_version }}.zip
+
+- name: Extract plugin to plugin directroy.
+  unarchive:
+    src: /tmp/{{ fail2ban_wordress_plugin_name_version }}.zip
+    dest: "{{ fail2ban_wordress_plugin_dir }}/"
+    copy: no
+    creates: "{{ fail2ban_wordress_plugin_dir }}/{{ fail2ban_wordress_plugin_name }}"
+
+- name: Copy fail2ban filters config.
+  shell: cp "{{ fail2ban_wordress_plugin_dir }}/{{ fail2ban_wordress_plugin_name }}/wordpress.conf" /etc/fail2ban/filter.d/wordpress.conf
+
+- name: Copy fail2ban jail config.
+  template:
+    src: templates/jail/wordpress.conf.j2
+    dest: /etc/fail2ban/jail.d/wordpress.conf
+
+- name: Ensure fail2ban is running and enabled on boot.
+  service: name=fail2ban state=started enabled=yes

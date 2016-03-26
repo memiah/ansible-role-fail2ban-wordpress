@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: memiah
+  description: Install the fail2ban service and WordPress fail2ban plugin on RedHat systems.
+  company: "Memiah Limited"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.9
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  galaxy_tags:
+    - fail2ban
+    - wordpress
+dependencies: []
