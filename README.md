@@ -2,7 +2,7 @@ Fail2ban WordPress
 ==================
 
 An Ansible Role that installs the fail2ban service and [WordPress 
-fail2ban plugin](https://wordpress.org/plugins/wp-fail2ban/developers/) on RedHat systems.
+fail2ban plugin](https://wordpress.org/plugins/wp-fail2ban/) on RedHat systems.
 
 Requirements
 ------------
