@@ -1,7 +1,16 @@
 ---
 fail2ban_wordress_plugin_name: wp-fail2ban
+
 fail2ban_wordress_plugin_version: ""
+
+fail2ban_wordress_filter_file: wordpress-hard.conf
+
 fail2ban_wordress_plugins_dir: /tmp
+
 fail2ban_wordress_mu_plugins_dir: false
-fail2ban_wordress_log_path: /var/log/messages
-fail2ban_wordress_bantime: 3600
+
+fail2ban_wordress_jail_config:
+  logpath: /var/log/messages
+  maxretry: 5
+  bantime: 21600
+  findtime: 86400

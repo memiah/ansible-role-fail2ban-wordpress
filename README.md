@@ -21,7 +21,11 @@ Name of the WordPress fail2ban plugin.
 
     fail2ban_wordress_plugin_version: ""
     
-Version of the plugin to install, if empty the development version is installed.
+Version of the plugin to install, if empty the latest (development) version is installed.
+
+    fail2ban_wordress_filter_file: wordpress-hard.conf
+
+Fail2ban filters file to use, copied from the downloaded plugin.
 
     fail2ban_wordress_plugins_dir: /tmp
 
@@ -29,15 +33,15 @@ Path to the WordPress plugins directory, or temporary directory if using as must
 
     fail2ban_wordress_mu_plugins_dir: false
     
-Path to the mu-plugins directory if installing as a must use plugin.
+Path to the mu-plugins directory (if installing as a must use plugin).
 
-    fail2ban_wordress_log_path: /var/log/messages
+    fail2ban_wordress_jail_config:
+      logpath: /var/log/messages
+      maxretry: 5
+      bantime: 21600
+      findtime: 86400
 
-Log file to use.
-
-    fail2ban_wordress_bantime: 3600
-
-Time (in seconds) to ban IPs for.
+Fail2ban jail config settings.
 
 Dependencies
 ------------
@@ -56,8 +60,16 @@ Example Playbook
 
 *Inside `vars/main.yml`*:
 
+Installing version 3.0.0 to mu-plugins:
+
+    fail2ban_wordress_plugin_version: "3.0.0"
+    fail2ban_wordress_mu_plugins_dir: /path/to/mu-plugins
+
+Installing version 2.3.x to wp-plugins:
+
     fail2ban_wordress_plugin_version: "2.3.2"
-    fail2ban_wordress_mu_plugins_dir: /path/to/wp-plugins/
+    fail2ban_wordress_plugins_dir: /path/to/wp-plugins
+    fail2ban_wordress_filter_file: wordpress.conf
 
 View the status of the wordpress filter:
 

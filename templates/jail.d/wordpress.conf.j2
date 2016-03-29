@@ -1,0 +1,9 @@
+[wordpress]
+enabled = true
+port = http,https
+filter = wordpress
+{% for item in fail2ban_wordress_jail_config | sort %}
+{{ item }}={{ fail2ban_wordress_jail_config[item] }}
+{% else %}
+# No additional config items.
+{% endfor %}
