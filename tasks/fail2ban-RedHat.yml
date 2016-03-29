@@ -10,15 +10,30 @@
     url: https://downloads.wordpress.org/plugin/{{ fail2ban_wordress_plugin_name_version }}.zip
     dest: /tmp/{{ fail2ban_wordress_plugin_name_version }}.zip
 
-- name: Extract plugin to plugin directroy.
+- name: Ensure plugins dir exists.
+  file: path={{ fail2ban_wordress_plugins_dir }} state=directory
+
+- name: Extract plugin to plugins directroy.
   unarchive:
     src: /tmp/{{ fail2ban_wordress_plugin_name_version }}.zip
-    dest: "{{ fail2ban_wordress_plugin_dir }}/"
+    dest: "{{ fail2ban_wordress_plugins_dir }}/"
     copy: no
-    creates: "{{ fail2ban_wordress_plugin_dir }}/{{ fail2ban_wordress_plugin_name }}"
+    creates: "{{ fail2ban_wordress_plugins_dir }}/{{ fail2ban_wordress_plugin_name }}"
+
+- name: Ensure mu-plugins dir exists.
+  file: path={{ fail2ban_wordress_mu_plugins_dir }} state=directory
+  when: fail2ban_wordress_mu_plugins_dir
+
+- name: Copy plugin file to mu-plugins dir.
+  command: cp {{ fail2ban_wordress_plugins_dir }}/{{ fail2ban_wordress_plugin_name }}/wp-fail2ban.php {{ fail2ban_wordress_mu_plugins_dir }}
+  args:
+    creates: "{{ fail2ban_wordress_mu_plugins_dir }}/wp-fail2ban.php"
+  when: fail2ban_wordress_mu_plugins_dir
 
 - name: Copy fail2ban filters config.
-  shell: cp "{{ fail2ban_wordress_plugin_dir }}/{{ fail2ban_wordress_plugin_name }}/wordpress.conf" /etc/fail2ban/filter.d/wordpress.conf
+  command: cp "{{ fail2ban_wordress_plugins_dir }}/{{ fail2ban_wordress_plugin_name }}/wordpress.conf" /etc/fail2ban/filter.d/wordpress.conf
+  args:
+    creates: /etc/fail2ban/filter.d/wordpress.conf
 
 - name: Copy fail2ban jail config.
   template:

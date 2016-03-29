@@ -23,9 +23,13 @@ Name of the WordPress fail2ban plugin.
     
 Version of the plugin to install, if empty the development version is installed.
 
-    fail2ban_wordress_plugin_dir: /tmp
+    fail2ban_wordress_plugins_dir: /tmp
 
-Path to the WordPress plugins directory.
+Path to the WordPress plugins directory, or temporary directory if using as must use plugin.
+
+    fail2ban_wordress_mu_plugins_dir: false
+    
+Path to the mu-plugins directory if installing as a must use plugin.
 
     fail2ban_wordress_log_path: /var/log/messages
 
