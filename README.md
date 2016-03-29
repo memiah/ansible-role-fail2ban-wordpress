@@ -56,8 +56,8 @@ Example Playbook
 
 *Inside `vars/main.yml`*:
 
-    fail2ban_wordress_plugin_version: ""
-    fail2ban_wordress_plugin_dir: /path/to/wp-plugins/
+    fail2ban_wordress_plugin_version: "2.3.2"
+    fail2ban_wordress_mu_plugins_dir: /path/to/wp-plugins/
 
 View the status of the wordpress filter:
 
