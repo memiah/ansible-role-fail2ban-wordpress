@@ -22,13 +22,13 @@
 
 - name: Ensure mu-plugins dir exists.
   file: path={{ fail2ban_wordress_mu_plugins_dir }} state=directory
-  when: fail2ban_wordress_mu_plugins_dir
+  when: fail2ban_wordress_mu_plugins_dir != False
 
 - name: Copy plugin file to mu-plugins dir.
   command: cp {{ fail2ban_wordress_plugins_dir }}/{{ fail2ban_wordress_plugin_name }}/wp-fail2ban.php {{ fail2ban_wordress_mu_plugins_dir }}
   args:
     creates: "{{ fail2ban_wordress_mu_plugins_dir }}/wp-fail2ban.php"
-  when: fail2ban_wordress_mu_plugins_dir
+  when: fail2ban_wordress_mu_plugins_dir != False
 
 - name: Copy fail2ban filters config.
   command: cp "{{ fail2ban_wordress_plugins_dir }}/{{ fail2ban_wordress_plugin_name }}/{{ fail2ban_wordress_filter_file }}" /etc/fail2ban/filter.d/wordpress.conf
